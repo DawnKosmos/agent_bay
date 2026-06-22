@@ -53,3 +53,9 @@
 - Generated code lives in clearly marked directories (e.g., `api/gen/`, `frontend/src/gen/`, `db/query/`). Generated files are checked in but never hand-edited.
 - Naming: `CreateProject` not `Create`; `project_id` in DB maps to `ProjectID` in Go and `projectId` in JSON.
 - One package has one reason to change. Handlers are thin; services hold behavior; repositories hold persistence logic.
+
+## 8. Shared libraries
+
+- **Use existing tools from `agent_bay/libs`** — Before writing new utility code, check `agent_bay/libs/go` and `agent_bay/libs/typescript` for reusable packages (e.g., `gogen`, validation helpers, middleware).
+- **Contribute new tools** — If you identify a pattern that improves code quality (e.g., a reusable authorization helper, a common error wrapper, a type-safe builder), add it to `agent_bay/libs` instead of duplicating it across projects.
+- Libraries in `agent_bay/libs` are versioned as Go modules and can be imported by other projects using Go workspaces, standard module requirements, or git submodules.
