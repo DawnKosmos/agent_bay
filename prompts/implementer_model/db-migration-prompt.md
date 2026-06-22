@@ -11,6 +11,13 @@ You are implementing a database change. I will give you:
 - The existing schema patterns (`db/schema-patterns.md`).
 - The current `design.md` data model overview.
 
+## Ponytail pre-flight
+
+Before writing the migration, ask:
+- Does this table need to exist? Can an existing table hold this data with a new column?
+- Fewest tables possible. Fewest columns possible.
+- Only write the migration if the data doesn't fit anywhere existing.
+
 ## Your task
 
 Write a migration pair (up + down) and any new sqlc queries.
@@ -38,6 +45,8 @@ Write a migration pair (up + down) and any new sqlc queries.
 - All migrations reversible unless explicitly noted as irreversible.
 - Foreign keys use appropriate `ON DELETE` actions.
 - Use `uuid` for IDs and `timestamptz` for timestamps.
+- No speculative columns, no nullable fields "for later." Add columns when they're needed.
+- Mark simplifications with `ponytail:` comments.
 
 ## Forbidden shortcuts
 
@@ -45,5 +54,9 @@ Write a migration pair (up + down) and any new sqlc queries.
 - No raw string concatenation in queries (use sqlc parameters).
 - No migration without a down file.
 - Do not guess column types or sizes if the spec is ambiguous; stop and ask.
+
+## Output discipline
+
+SQL first. At most 3 lines of explanation. No prose defending the schema.
 
 Return only the file contents inside markdown code blocks with file paths as headers.

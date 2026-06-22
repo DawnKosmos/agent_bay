@@ -34,11 +34,16 @@ Produce a markdown file named `design.md` with exactly these sections:
 - Do not include per-field UI layouts, SQL, code file paths, or internal error strings.
 - Every action must map to an actor and a permission/resource scope.
 - List at least three implementation phases.
+- Apply the Ponytail ladder to the design: question whether each module, each bounded context, and each phase needs to exist. Fewer modules, fewer phases, fewer abstractions is better.
+- Prefer stdlib, native platform features, and existing dependencies over new ones. Libraries are welcome when they reduce code size and complexity. Justify every dependency by making the code meaningfully smaller or safer.
+- Mark deliberate design simplifications with `ponytail: <ceiling>, <upgrade path>`.
 
 ## Forbidden shortcuts
 
 - Do not say "we may need X"; decide yes or no.
 - Do not leave authorization as "will be defined later"; define the rule now.
 - Do not omit error-handling or security implications.
+- Do not add speculative modules, interfaces, or abstraction layers.
+- Do not create phases for structure's sake — merge small phases.
 
 Return only the `design.md` content inside a markdown code block.

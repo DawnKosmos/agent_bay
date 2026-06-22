@@ -33,6 +33,13 @@ Authn strategy (OAuth/OIDC/JWT/session) and authz strategy (RBAC, ABAC, resource
 Numbered phases with scope boundaries. Each phase ships working, tested, observable code.
 ```
 
+## Ponytail design rules
+
+- Before adding a bounded context, ask: does this need to be its own module, or is it one handler in an existing module? Fewest modules possible.
+- Implementation phases: fewer phases is better. If Phase 1 and Phase 2 are both small, merge them. Each phase must be deployable, but don't manufacture phases for structure's sake.
+- Mark deliberate design simplifications with a note: `ponytail: <what was simplified>, <ceiling>, <upgrade path>`.
+- No speculative modules, interfaces, or abstraction layers. Add them when a second implementation appears, not before.
+
 ## What NOT to put here
 
 `design.md` is a contract, not a spec sheet. Do not include:
@@ -41,6 +48,7 @@ Numbered phases with scope boundaries. Each phase ships working, tested, observa
 - SQL schema, migration names, or indexing decisions.
 - Concrete code, file paths, package names, or generated types.
 - Internal error message strings exposed to users.
+- Speculative modules, interfaces, or abstraction layers. Add them when a second implementation appears.
 
 Those belong in feature specs (`feature/<name>.md`), style docs (`style.md`), reference code, and generated contracts.
 

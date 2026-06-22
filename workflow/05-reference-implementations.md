@@ -32,7 +32,9 @@ docs/reference/
     └── create_chat_message.sql
 ```
 
-Reference code can be removed or relocated after the first real implementation lands, but keep it intact until review passes. Do not skip it because the feature "is simple." Simple features are where shortcuts become habits.
+Reference code can be removed or relocated after the first real implementation lands, but keep it intact until review passes.
+
+Skip reference implementations for simple features. A one-endpoint CRUD handler doesn't need a reference; the style contract is enough. Write references for features that introduce a new pattern, a new service boundary, or non-trivial authorization logic. Reference implementations are themselves subject to the ladder — don't write a reference that's more complex than the features it demonstrates.
 
 ## Review checkpoint
 

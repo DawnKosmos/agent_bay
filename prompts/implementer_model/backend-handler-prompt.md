@@ -11,6 +11,13 @@ You are implementing a backend HTTP handler. I will give you:
 - A reference handler example showing the pattern.
 - The generated types available (`db/query/`, `ws_api/`).
 
+## Ponytail pre-flight
+
+Before writing the handler, stop at the first rung:
+- Does this need to be a handler, or does an existing tool/route/middleware already cover it?
+- Is it a one-liner? Write the line and stop.
+- Only write the full handler if none of the ladder rungs hold.
+
 ## Your task
 
 Write the Go handler file and its test file. Follow the reference handler pattern exactly.
@@ -28,9 +35,10 @@ Write the Go handler file and its test file. Follow the reference handler patter
    - JSON response.
 
 2. **Test file**
-   - Table-driven happy path test.
-   - Table-driven authorization failure test.
-   - Table-driven validation error test.
+   - One runnable check for non-trivial logic (the smallest thing that fails if the logic breaks).
+   - Authorization boundary test is mandatory.
+   - Validation error test if validation is non-trivial.
+   - Trivial handlers need no test. YAGNI applies to tests too.
    - Any required mocks/fakes.
 
 ## Constraints
@@ -38,7 +46,9 @@ Write the Go handler file and its test file. Follow the reference handler patter
 - No `panic` in request paths.
 - No direct DB access from the handler.
 - Use generated types where possible.
-- Every error path has a test.
+- No interface with one implementation. No wrapper that only delegates.
+- Mark deliberate simplifications with `ponytail:` comments naming the ceiling and upgrade path.
+- One runnable check for non-trivial logic. Authorization boundary test is mandatory. Trivial one-liners need no test.
 
 ## Forbidden shortcuts
 
@@ -46,5 +56,11 @@ Write the Go handler file and its test file. Follow the reference handler patter
 - Do not use `interface{}` where a generated type exists.
 - Do not swallow errors.
 - Do not guess behavior if the spec is ambiguous; stop and ask.
+- Do not add abstractions not requested in the spec.
+- Do not write more code than the feature spec requires.
+
+## Output discipline
+
+Code first. At most 3 lines of explanation after. No essays, no feature tours. If the explanation is longer than the code, delete it.
 
 Return only the file contents inside markdown code blocks with file paths as headers.

@@ -19,11 +19,17 @@ If an answer is unknown, write it down as an open question with an owner, do not
 
 The default stack is:
 
-- **Backend** — Go (standard `net/http` or Fiber), PostgreSQL.
+- **Backend** — Go (Fiber or standard `net/http`), PostgreSQL.
 - **Frontend** — React 19 + Vite + strict TypeScript.
 - **Real-time** — Centrifuge WebSockets.
 - **Data access** — sqlc for type-safe SQL queries.
 - **Service contracts** — Protobuf/gRPC between backend services or backend-to-mobile; `libs/gogen` for Go structs → TypeScript interfaces.
+
+### Ponytail stack check
+
+Before committing to the default stack, ask: does the platform or an existing tool already cover what we need? Use PostgreSQL features (JSONB, full-text search, pub/sub via LISTEN/NOTIFY) instead of adding Redis/Elasticsearch when the workload fits. Question every non-functional requirement — is it real or speculative? "We might need multi-tenancy" is not a requirement, it's a maybe.
+
+Libraries and packages are welcome when they reduce code size and complexity. Don't reinvent what a good package does well. For simple things, a few lines of your own code may be enough. For complex things (routing, validation, WebSocket management), a well-maintained library that shrinks your codebase is the lazy choice. Every dependency must justify itself by making the code meaningfully smaller or safer — not by novelty.
 
 ### When to deviate
 

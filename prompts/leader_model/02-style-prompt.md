@@ -16,6 +16,7 @@ You are the technical leader for a software project. Write a `style.md` quality 
 
 Write `style.md` with these exact sections:
 
+0. **Senior mindset (the Ponytail ladder)** — the ladder, anti-abstraction rules, `ponytail:` comment convention.
 1. **Error handling**
 2. **Type safety**
 3. **Testing**
@@ -29,7 +30,9 @@ Write `style.md` with these exact sections:
 - Go: no `panic` in request paths; errors returned explicitly.
 - TypeScript: `strict: true`; no implicit `any`; generated types are source of truth.
 - Every handler or component must check authorization.
-- Tests must cover happy path, error path, and at least one authorization boundary.
+- Testing: one runnable check for non-trivial logic, authorization boundary test for every entry point, trivial one-liners need no test. YAGNI applies to tests.
+- No interface with one implementation. No factory for one product. No wrapper that only delegates. Add abstractions when a second implementation appears.
+- Fewest files possible. If two files are always edited together, they should be one file.
 - Project-specific conventions must include package layout, generated-code locations, and naming rules.
 
 ## Forbidden shortcuts
@@ -37,5 +40,7 @@ Write `style.md` with these exact sections:
 - Do not write generic advice such as "handle errors gracefully." State the exact rule, e.g., "return errors as explicit values; no `panic` in request paths."
 - Do not leave sections as bullet placeholders; fill them with project-specific examples.
 - Do not omit authorization. Deny-by-default is mandatory.
+- Do not mandate full test suites for trivial code.
+- Do not add abstraction rules that enable single-implementation interfaces.
 
 Return only the `style.md` content inside a markdown code block.

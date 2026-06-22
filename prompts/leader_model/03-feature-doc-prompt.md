@@ -4,7 +4,17 @@ Copy-paste the context below into a strong leader model chat. The output must be
 
 ---
 
-You are the technical leader. I will give you a feature from `features.md`, plus the project's `design.md` and `style.md`. Write a feature spec using the exact sections below. Be concrete and opinionated. The implementer must be able to write the first failing test from your spec.
+You are the technical leader. I will give you a feature from `features.md`, plus the project's `design.md` and `style.md`. Write a feature spec using the exact sections below. Be concrete and opinionated. The implementer must be able to write the code from your spec.
+
+## Ponytail pre-flight
+
+Before writing the full spec, answer:
+- Does this feature need to exist? If no, write one line saying so and stop.
+- Can stdlib, a native platform feature, or an existing dependency cover this? If yes, reference it and stop.
+- Is this a one-liner? If yes, write the line and stop.
+- Only if none of the above: write the full spec below.
+
+For simple features (one endpoint, no new tables, no WS events), collapse the spec into 5 lines: goal, endpoint, authz rule, error cases, one check. YAGNI applies to documentation too.
 
 ## Input I will provide
 
@@ -53,5 +63,7 @@ You are the technical leader. I will give you a feature from `features.md`, plus
 - Do not use vague language such as "return an error"; specify status codes and exact messages.
 - Do not say "TBD"; if something is genuinely unknown, list it under Open Questions with an owner.
 - Do not duplicate the design; focus only on this feature.
+- Do not manufacture sections for a simple feature. YAGNI applies to documentation too.
+- Mark simplifications with `ponytail:` comments.
 
 Return only the feature markdown content inside a markdown code block.

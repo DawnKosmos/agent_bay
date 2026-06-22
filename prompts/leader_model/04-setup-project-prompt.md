@@ -30,11 +30,16 @@ You are setting up a new project repository. I will give you the project name, a
 - Do not propose custom frameworks or tools outside the default stack unless I explicitly asked.
 - Every target in the Makefile must be concrete and runnable.
 - Include a `.env.example` listing.
+- Apply the Ponytail ladder to the stack: question whether each tool is needed. A single-service app may not need Protobuf/gRPC. sqlc is always worth it. gogen is worth it when frontend consumes backend types.
+- Fewest dependencies that satisfy real requirements. Libraries are welcome when they reduce code size and complexity. Every dependency must justify itself by making the code meaningfully smaller or safer.
+- No boilerplate, no scaffolding "for later."
 
 ## Forbidden shortcuts
 
 - Do not leave steps as "configure X"; give the file content or exact command.
 - Do not omit testing or codegen from CI.
 - Do not skip authorization wiring (JWT middleware, user context).
+- Do not add codegen for boundaries that don't exist.
+- Do not create abstraction layers before there's a second implementation.
 
 Return the plan as markdown with code blocks for commands and file contents.

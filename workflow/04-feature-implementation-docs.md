@@ -2,6 +2,15 @@
 
 A feature spec is a mini-contract. It tells the implementer exactly what to build, what to check, and how to prove it works. Write one markdown file per feature in `docs/feature/<feature-name>.md`.
 
+## Ponytail pre-flight (answer before writing the spec)
+
+- Does this feature need to exist? If no, write one line saying so and stop.
+- Can stdlib, a native platform feature, or an existing dependency cover this? If yes, reference it and stop.
+- Is this a one-liner? If yes, write the line and stop.
+- Only if none of the above: write the full spec below.
+
+For simple features (one endpoint, no new DB tables, no WS events), collapse the spec into a 5-line summary: goal, endpoint, authz rule, error cases, one check. Don't manufacture sections for structure's sake. YAGNI applies to documentation too.
+
 ## Required sections
 
 ```markdown

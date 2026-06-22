@@ -5,11 +5,23 @@ Use this checklist before merging any PR. A single unchecked item blocks merge u
 ## Code quality
 
 - [ ] All tests pass locally and in CI.
-- [ ] New code has tests: happy path, error path, and at least one authorization boundary.
+- [ ] Non-trivial new code has one runnable check. Authorization boundaries have a test. Trivial one-liners need no test.
 - [ ] No `any` or `unknown` types without a justification comment.
 - [ ] No `panic` in Go request paths.
 - [ ] No swallowed errors; every deferred/ignored return is intentional and commented.
 - [ ] No dead code, commented-out experiments, or unused imports.
+
+## Over-engineering (Ponytail review)
+
+- [ ] No interface with one implementation.
+- [ ] No factory for one product.
+- [ ] No wrapper that only delegates.
+- [ ] No new dependency that stdlib or existing dep covers.
+- [ ] No speculative config, flags, or feature toggles nobody sets.
+- [ ] No dead code or unused flexibility.
+- [ ] Every `ponytail:` comment names a ceiling and an upgrade path.
+- [ ] Fewest files possible — files always edited together are one file.
+- [ ] The diff's best outcome is getting shorter. If this PR only adds, justify why deletion wasn't possible.
 
 ## Authorization
 
@@ -47,6 +59,7 @@ Use this checklist before merging any PR. A single unchecked item blocks merge u
 - [ ] Feature spec matches the implementation.
 - [ ] Reference code is updated if the pattern changed.
 - [ ] PR description explains what changed and why.
+- [ ] PR description lists any `ponytail:` simplifications and their upgrade paths.
 
 ## Merge rule
 

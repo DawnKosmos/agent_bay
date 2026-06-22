@@ -2,9 +2,11 @@
 
 Whenever two services or systems share a contract, generate the contract types instead of writing them by hand. Manual mirroring is the fastest way to silently break HTTP clients, WS consumers, and database queries.
 
-## Rule: codegen at every service boundary
+## Rule: codegen at every service boundary that actually exists
 
-- Backend ↔ backend or backend ↔ mobile: use Protobuf/gRPC.
+Codegen at every service boundary that actually exists. A single-service app with no mobile client does not need Protobuf/gRPC. sqlc is always worth it (type-safe SQL). gogen is worth it when the frontend consumes backend types. Don't generate contracts for boundaries that don't exist yet. Question whether each codegen tool is needed for this project — if there's one backend service and one frontend, gogen may be enough and Protobuf is YAGNI.
+
+- Backend ↔ backend or backend ↔ mobile: use Protobuf/gRPC (only when these boundaries exist).
 - Backend ↔ PostgreSQL: use sqlc.
 - Backend structs ↔ frontend TypeScript: use `libs/gogen` (a custom Go struct → TypeScript interface generator) or an OpenAPI generator. In this repo, the generator source lives at `libs/gogen/gogen.go` relative to the repository root.
 - Frontend network layer: derive from generated types; do not hand-maintain request shapes.
