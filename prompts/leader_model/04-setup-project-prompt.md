@@ -42,4 +42,16 @@ You are setting up a new project repository. I will give you the project name, a
 - Do not add codegen for boundaries that don't exist.
 - Do not create abstraction layers before there's a second implementation.
 
+## Calling implementer models
+
+After setup is complete and the first feature specs are written, hand off to implementer models. The implementer prompts live in `agent_bay/prompts/implementer_model/`:
+
+- `backend-handler-prompt.md` — for Go HTTP handlers + tests.
+- `db-migration-prompt.md` — for PostgreSQL migrations + sqlc queries.
+- `frontend-component-prompt.md` — for React/TypeScript components + hooks.
+
+Each implementer call needs: the feature spec (`docs/feature/<name>.md`), the style contract (`docs/style.md`), any reference implementation, and the generated types path. See `agent_bay/prompts/leader_model/03-feature-doc-prompt.md` for the full handoff table and invocation examples.
+
+Use the cheapest model that can follow the spec correctly. The leader model does not need to write code — it produces specs that implementers can execute.
+
 Return the plan as markdown with code blocks for commands and file contents.

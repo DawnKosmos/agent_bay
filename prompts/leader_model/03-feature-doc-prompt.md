@@ -66,4 +66,45 @@ For simple features (one endpoint, no new tables, no WS events), collapse the sp
 - Do not manufacture sections for a simple feature. YAGNI applies to documentation too.
 - Mark simplifications with `ponytail:` comments.
 
+## Handoff: calling the implementer model
+
+After the feature spec is written, hand it off to an implementer model. Choose the implementer prompt based on the task:
+
+| Task | Implementer prompt | Files to provide |
+|------|-------------------|------------------|
+| Backend handler | `agent_bay/prompts/implementer_model/backend-handler-prompt.md` | The feature spec (`docs/feature/<name>.md`), `docs/style.md`, a reference handler (if any), generated types path (`db/query/`, `ws_api/`) |
+| DB migration | `agent_bay/prompts/implementer_model/db-migration-prompt.md` | The feature spec, `docs/style.md`, `db/schema-patterns.md`, `docs/design.md` data model section |
+| Frontend component | `agent_bay/prompts/implementer_model/frontend-component-prompt.md` | The feature spec, `docs/style.md`, a reference component (if any), `frontend/src/gen/models.ts` |
+
+### How to invoke
+
+If using OpenCode CLI (headless one-shot):
+
+```bash
+# Backend handler example
+opencode run --model <implementer-model> \
+  "Read agent_bay/prompts/implementer_model/backend-handler-prompt.md, docs/feature/<name>.md, docs/style.md, and the reference handler in docs/reference/backend/. Follow the prompt instructions to produce the handler and test files."
+
+# DB migration example
+opencode run --model <implementer-model> \
+  "Read agent_bay/prompts/implementer_model/db-migration-prompt.md, docs/feature/<name>.md, docs/style.md, db/schema-patterns.md, and docs/design.md. Follow the prompt instructions to produce the migration and sqlc queries."
+
+# Frontend component example
+opencode run --model <implementer-model> \
+  "Read agent_bay/prompts/implementer_model/frontend-component-prompt.md, docs/feature/<name>.md, docs/style.md, the reference component in docs/reference/frontend/, and frontend/src/gen/models.ts. Follow the prompt instructions to produce the component and hook files."
+```
+
+If using a chat interface (e.g., OpenCode TUI, Cursor, Windsurf):
+1. Open a new chat with the implementer model.
+2. Paste the implementer prompt content as the system/first message.
+3. Provide the files listed above as context (attach them or reference them by path).
+4. Ask the implementer to produce the code.
+
+### Rules for handoff
+
+- The implementer must receive the feature spec, the style contract, and any reference code. If any are missing, the handoff is incomplete.
+- The implementer is empowered to push back if it sees a lazier solution the spec missed (Ponytail ladder).
+- If the spec is ambiguous, the implementer stops and asks — it does not guess.
+- The implementer's output discipline: code first, at most 3 lines of explanation, no essays.
+
 Return only the feature markdown content inside a markdown code block.
